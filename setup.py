@@ -33,6 +33,7 @@ setup(name='sparc.db_splunk',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'six',
           'zope.component',
           'zope.interface',
           'splunk-sdk', #dependant on Python 2 as of version 1.6.2

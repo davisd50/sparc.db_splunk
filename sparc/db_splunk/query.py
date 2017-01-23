@@ -1,3 +1,4 @@
+from six import string_types
 from splunklib.results import ResultsReader
 from zope import component
 from zope import interface
@@ -5,8 +6,7 @@ from zope.component.factory import Factory
 from sparc.db import IQueryResultSet
 from sparc.db import ITabularResult
 from sparc.db.query import DbQuery
-from sparc.db.splunk import ISplunkQuery
-from sparc.db.splunk import ISplunkResultsStream
+from sparc.db_splunk import ISplunkResultsStream
 
 @interface.implementer()
 class SplunkQuery(DbQuery):
@@ -27,7 +27,7 @@ class QueryResultSetForSplunk(object):
         _seq = []
         for ordered_dict in ResultsReader(self.context):
             for key, value in ordered_dict.iteritems():
-                if isinstance(value, basestring):
+                if isinstance(value, string_types):
                     ordered_dict[key] = component.createObject(u'sparc.db.result_value', value)
                 else:
                     ordered_dict[key] = component.createObject(u'sparc.db.result_multi_value', value)

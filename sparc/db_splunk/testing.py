@@ -1,5 +1,4 @@
 import warnings
-import xml.etree.ElementTree as ET
 from zope import component
 from sparc.testing.testlayer import SparcZCMLFileLayer
 import sparc.testing

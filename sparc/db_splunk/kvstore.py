@@ -10,7 +10,7 @@ from zope.schema.interfaces import IDict
 from zope.schema.interfaces import IDottedName
 from zope.schema.interfaces import IText, INativeString
 from zope.schema.fieldproperty import FieldProperty
-from sparc.db.splunk import xml_ns
+from sparc.db_splunk import xml_ns
 from sparc.utils.requests import IRequest
 from interfaces import ISPlunkKVCollectionIdentifier
 from interfaces import ISplunkKVCollectionSchema
