@@ -3,7 +3,7 @@ import unittest
 import zope.testrunner
 from zope import component
 from sparc.testing.fixture import test_suite_mixin
-from sparc.db.splunk.testing import SPARC_DB_SPLUNK_INTEGRATION_LAYER
+from ..testing import SPARC_DB_SPLUNK_INTEGRATION_LAYER
 
 class SparcDbSplunkSearchTestCase(unittest.TestCase):
     level = 2
@@ -22,7 +22,7 @@ class SparcDbSplunkSearchTestCase(unittest.TestCase):
                                                         sci)
 
 class test_suite(test_suite_mixin):
-    package = 'sparc.db.splunk'
+    package = 'sparc.db_splunk'
     module = 'search'
     
     def __new__(cls):

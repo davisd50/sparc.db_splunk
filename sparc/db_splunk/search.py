@@ -4,10 +4,10 @@ from zope import interface
 from zope.interface.exceptions import DoesNotImplement
 from zope.component.factory import Factory
 from splunklib.client import connect
-from interfaces import ISplunkConnectionInfo
-from interfaces import ISplunkSavedSearches
-from interfaces import ISplunkSavedSearchIterator
-from interfaces import ISplunkSavedSearchQueryFilter
+from . import ISplunkConnectionInfo
+from . import ISplunkSavedSearches
+from . import ISplunkSavedSearchIterator
+from . import ISplunkSavedSearchQueryFilter
 
 from sparc.logging import logging
 logger = logging.getLogger(__name__)

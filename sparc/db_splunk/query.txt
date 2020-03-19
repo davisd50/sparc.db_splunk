@@ -10,7 +10,7 @@ query a database.
 >>> from zope.component import createObject
 >>> query = createObject(u"sparc.db.splunk.query", u"a simple query string")
 
->>> from sparc.db.splunk import ISplunkQuery
+>>> from sparc.db_splunk import ISplunkQuery
 >>> ISplunkQuery.providedBy(query)
 True
 
@@ -27,8 +27,8 @@ Splunk Query Result Set
 A result set is an iterator for a set of Splunk search results.
 
 Create a mock response stream of Splunk XML data
->>> from sparc.db.splunk import ISplunkResultsStream
->>> from sparc.db.splunk.tests import mock_result_stream
+>>> from sparc.db_splunk import ISplunkResultsStream
+>>> from sparc.db_splunk.tests import mock_result_stream
 >>> import sparc.db.splunk.tests
 >>> response = mock_result_stream()
 >>> ISplunkResultsStream.providedBy(response)
@@ -66,7 +66,7 @@ IQueryResultSet, we'll use the sparc.db.splunk package for this purpose.
 
 First, let's create our results set
 >>> from sparc.db import IQueryResultSet
->>> from sparc.db.splunk.tests import mock_result_stream
+>>> from sparc.db_splunk.tests import mock_result_stream
 >>> response = mock_result_stream()
 >>> results = IQueryResultSet(response)
 

@@ -1,10 +1,11 @@
+import os
 import warnings
 from zope import component
 from sparc.testing.testlayer import SparcZCMLFileLayer
-import sparc.testing
+import sparc.db_splunk
 
-from sparc.utils.requests.request import Request
-from kvstore import current_kv_names
+from sparc.requests.request import Request
+from .kvstore import current_kv_names
 
 
 class SparcDBSplunkLayer(SparcZCMLFileLayer, Request):
@@ -22,14 +23,18 @@ class SparcDBSplunkLayer(SparcZCMLFileLayer, Request):
     kv_username = u'nobody' # 'nobody' is typical to let all users see the KV collection
     kv_appname = u'search'
     
+    def __init__(self, *args, **kwargs):
+        SparcZCMLFileLayer.__init__(self, *args, **kwargs)
+        Request.__init__(self, **kwargs)
+    
     @property
     def sci(cls):
         sci = component.createObject(
                             u"sparc.db.splunk.splunk_connection_info_factory")
-        sci['host'] = 'splunk_testing_host' # NOT PROD HOST!!!!!...easiest to set this in your host file
-        sci['port'] = '8089'
-        sci['username'] = 'admin'
-        sci['password'] = 'admin'
+        sci['host'] = os.environ.get('MELLON_TEST_SPLUNK_HOST', None) 
+        sci['port'] = os.environ.get('MELLON_TEST_SPLUNK_PORT', '8089')
+        sci['username'] = os.environ.get('MELLON_TEST_SPLUNK_USERNAME', 'admin')
+        sci['password'] = os.environ.get('MELLON_TEST_SPLUNK_PASSWORD', None)
         return sci
     
     @property
@@ -91,4 +96,4 @@ class SparcDBSplunkLayer(SparcZCMLFileLayer, Request):
             warnings.simplefilter("ignore") # ignore https cert warnings
         super(SparcDBSplunkLayer,self).tearDown()
 
-SPARC_DB_SPLUNK_INTEGRATION_LAYER = SparcDBSplunkLayer(sparc.testing) #should initialize the ftesting.zcml file
+SPARC_DB_SPLUNK_INTEGRATION_LAYER = SparcDBSplunkLayer(sparc.db_splunk) #should initialize the ftesting.zcml file

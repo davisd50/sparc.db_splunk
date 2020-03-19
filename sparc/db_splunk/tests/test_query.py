@@ -1,11 +1,13 @@
 import os
 import zope.testrunner
 from sparc.testing.fixture import test_suite_mixin
+from ..testing import SPARC_DB_SPLUNK_INTEGRATION_LAYER
 
 
 class test_suite(test_suite_mixin):
-    package = 'sparc.db.splunk'
+    package = 'sparc.db_splunk'
     module = 'query'
+    layer = SPARC_DB_SPLUNK_INTEGRATION_LAYER
 
 
 if __name__ == '__main__':

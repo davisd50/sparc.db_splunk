@@ -4,7 +4,7 @@
     i18n_domain="sparc.db_splunk">
     
     <!-- Required ZCA Components -->
-    <include package="sparc.testing" file="zca.zcml" />
+    <include package="sparc.testing" />
 
     <!-- Required Sparc Components -->
     <include package="." />

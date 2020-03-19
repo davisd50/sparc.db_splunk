@@ -1,8 +1,8 @@
 import os
 from importlib import import_module
-from StringIO import StringIO
+from io import StringIO
 from zope.interface import alsoProvides
-from sparc.db.splunk import ISplunkResultsStream
+from ..interfaces import ISplunkResultsStream
 
 def mock_result_stream():
     """Return a ISplunkResultsStream from sample data"""

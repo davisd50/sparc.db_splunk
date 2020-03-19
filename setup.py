@@ -38,7 +38,8 @@ setup(name='sparc.db_splunk',
           'zope.interface',
           'splunk-sdk', #dependant on Python 2 as of version 1.6.2
           'sparc.db',
-          'sparc.utils'
+          'sparc.utils',
+          'sparc.requests'
           # -*- Extra requirements: -*-
       ],
       tests_require=[

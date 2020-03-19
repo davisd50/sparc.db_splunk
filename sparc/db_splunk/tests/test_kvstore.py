@@ -4,7 +4,7 @@ import zope.testrunner
 from zope import component
 from sparc.testing.fixture import test_suite_mixin
 from sparc.testing.testlayer import SPARC_INTEGRATION_LAYER
-from sparc.db.splunk.testing import SPARC_DB_SPLUNK_INTEGRATION_LAYER
+from ..testing import SPARC_DB_SPLUNK_INTEGRATION_LAYER
 
 from zope import schema
 from zope.interface import Interface
@@ -23,11 +23,11 @@ class ITestSchema(Interface):
     ascii = schema.ASCII(title=u"ascii")
             
 class SparcCacheSplunkAreaTestCase(unittest.TestCase):
-    layer = SPARC_INTEGRATION_LAYER
+    layer = SPARC_DB_SPLUNK_INTEGRATION_LAYER
     sm = component.getSiteManager()
     
     def test_ISplunkKVCollectionSchema_adapter_for_schemas(self):
-        from sparc.db.splunk import ISplunkKVCollectionSchema
+        from ..interfaces import ISplunkKVCollectionSchema
         schema = ISplunkKVCollectionSchema(ITestSchema)
         
         self.assertIn('field.date', schema)
@@ -64,7 +64,7 @@ class SparcCacheSplunkAreaTestCase(unittest.TestCase):
         self.assertEquals(schema['field.ascii'], 'string')
         
     def test_bad_collection(self):
-        from sparc.db.splunk import ISplunkKVCollectionSchema
+        from ..interfaces import ISplunkKVCollectionSchema
         class ITestSchemaDict(Interface):
             list = schema.List(title=u'bad',
                                        value_type=schema.Dict(title=u'bad'))
@@ -90,8 +90,8 @@ class SparcDBSplunkKVTestCase(unittest.TestCase):
     sm = component.getSiteManager()
     
     def test_current_kv_names(self):
-        from sparc.db.splunk.kvstore import current_kv_names
-        req = component.createObject(u'sparc.utils.requests.request')
+        from ..kvstore import current_kv_names
+        req = component.createObject(u'sparc.requests.request')
         req.req_kwargs['verify'] = False
         req.gooble_warnings = True
         self.assertIn('test_collection', \
@@ -102,8 +102,8 @@ class SparcDBSplunkKVTestCase(unittest.TestCase):
 
     def test_schema_adapter_for_named_collection(self):
         # tests SplunkKVCollectionSchemaFromSplunkInstance
-        from sparc.db.splunk import ISplunkKVCollectionSchema
-        from sparc.utils.requests import IRequest
+        from ..interfaces import ISplunkKVCollectionSchema
+        from sparc.requests import IRequest
         kv_id = self.layer.get_kv_id(u'test_collection')
         schema = component.getMultiAdapter((self.layer.sci, 
                                             kv_id,
@@ -113,7 +113,7 @@ class SparcDBSplunkKVTestCase(unittest.TestCase):
             self.assertEquals(self.layer.kv_names['test_collection'][k], schema[k])
 
 class test_suite(test_suite_mixin):
-    package = 'sparc.db.splunk'
+    package = 'sparc.db_splunk'
     module = 'kvstore'
     
     def __new__(cls):

@@ -10,7 +10,7 @@ We can obtain an instance via its factory
 >>> connect_info = createObject(u'sparc.db.splunk.splunk_connection_info_factory')
 
 Let's make sure it provides our expected interface
->>> from sparc.db.splunk import ISplunkConnectionInfo
+>>> from sparc.db_splunk import ISplunkConnectionInfo
 >>> ISplunkConnectionInfo.providedBy(connect_info)
 True
 
@@ -38,6 +38,6 @@ We can obtain an instance via its factory
 'my test regex string'
 
 Let's make sure it provides the expected interface
->>> from sparc.db.splunk import ISplunkSavedSearchQueryFilter
+>>> from sparc.db_splunk import ISplunkSavedSearchQueryFilter
 >>> ISplunkSavedSearchQueryFilter.providedBy(filter)
 True

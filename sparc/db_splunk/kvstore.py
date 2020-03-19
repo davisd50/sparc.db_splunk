@@ -11,12 +11,11 @@ from zope.schema.interfaces import IDottedName
 from zope.schema.interfaces import IText, INativeString
 from zope.schema.fieldproperty import FieldProperty
 from sparc.db_splunk import xml_ns
-from sparc.utils.requests import IRequest
-from interfaces import ISPlunkKVCollectionIdentifier
-from interfaces import ISplunkKVCollectionSchema
-from interfaces import ISplunkConnectionInfo
+from sparc.requests import IRequest, IRequestResolver
+from .interfaces import ISPlunkKVCollectionIdentifier
+from .interfaces import ISplunkKVCollectionSchema
+from .interfaces import ISplunkConnectionInfo
 
-sm = component.getSiteManager()
 def current_kv_names(sci, app_user, app_name, request=None):
     """Return set of string names of current available Splunk KV collections
     
@@ -25,15 +24,16 @@ def current_kv_names(sci, app_user, app_name, request=None):
         app_user: Splunk KV Collection app user to reference
         app_name: Splunk KV Collection application name to reference
     kwargs:
-        request: instance of sparc.utils.requests.IRequest
+        request: instance of sparc.requests.IRequest
         
-    request will be resolved via 'sparc.utils.requests.request_resolver' named
+    request will be resolved via IRequestResolver utility
     component.
 
     Returns:
         Set of string names for collections found
     """
-    resolver = sm.getUtility(IRequest, u'sparc.utils.requests.request_resolver')
+    sm = component.getSiteManager()
+    resolver = sm.getUtility(IRequestResolver)
     req = resolver(request=request)
     kwargs = {'auth': (sci['username'], sci['password'], )}
     url = "".join(['https://',sci['host'],':',sci['port'],
